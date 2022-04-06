@@ -1,0 +1,6 @@
+INSERT INTO USER VALUES (NULL, 'adm@gmail.com', 'Admin User', '$2a$10$DA3m/LdwzywweuxwdRSn3e7GvOD8uk.DFrqIsjc1iwL9JoO2DJpYe');
+INSERT INTO USER VALUES (NULL, 'user@gmail.com', 'Regular User', '$2a$10$DA3m/LdwzywweuxwdRSn3e7GvOD8uk.DFrqIsjc1iwL9JoO2DJpYe');
+
+INSERT INTO USER_ROLES VALUES (1, 'ADMIN');
+INSERT INTO USER_ROLES VALUES (1, 'USER');
+INSERT INTO USER_ROLES VALUES (2, 'USER');
