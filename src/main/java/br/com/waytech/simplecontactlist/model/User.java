@@ -15,7 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,9 +32,10 @@ public class User implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotEmpty
+	@Size(min = 3)
 	private String name;
-	@NotNull
 	@Email
+	@NotEmpty
 	@Column(unique = true, nullable = false)
 	private String email;
 	@NotEmpty

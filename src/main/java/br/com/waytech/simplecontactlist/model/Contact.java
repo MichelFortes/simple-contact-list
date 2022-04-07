@@ -24,10 +24,10 @@ public class Contact {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotEmpty
+	@Size(min=3)
 	private String name;
 	@Email
 	private String email;
-	@NotEmpty
 	private String address;
 	@Embedded
 	private Base64File picture;

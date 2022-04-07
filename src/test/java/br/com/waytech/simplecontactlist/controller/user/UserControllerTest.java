@@ -33,6 +33,18 @@ class UserControllerTest {
 	private ObjectMapper mapper;
 	
 	@Test
+	void shoulFailToGetUserOnFakeToke() throws Exception {
+		
+		String token = "werwerwerwfsdfsdfsdfsdfsdfsd";
+		
+		mockMvc.perform(get("https://localhost" + UserController.PATH)
+				.contentType(MediaType.APPLICATION_JSON_VALUE)
+				.header(HttpHeaders.AUTHORIZATION, "bearer " + token)
+				.contentType(MediaType.APPLICATION_JSON_VALUE))
+		.andExpect(status().isForbidden());
+	}
+	
+	@Test
 	void shoulGetUser() throws Exception {
 		
 		mockMvc.perform(post("https://localhost" + PublicAuthController.PATH)
@@ -59,17 +71,33 @@ class UserControllerTest {
 				
 				});
 	}
-
+	
 	@Test
-	void shoulFailToGetUserOnFakeToke() throws Exception {
+	void shoulUpdateUser() throws Exception {
 		
-		String token = "werwerwerwfsdfsdfsdfsdfsdfsd";
-		
-		mockMvc.perform(get("https://localhost" + UserController.PATH)
-				.contentType(MediaType.APPLICATION_JSON_VALUE)
-				.header(HttpHeaders.AUTHORIZATION, "bearer " + token)
+		mockMvc.perform(post("https://localhost" + PublicAuthController.PATH)
+				.content(mapper.writeValueAsString(new AuthForm("user@gmail.com", "123456")))
 				.contentType(MediaType.APPLICATION_JSON_VALUE))
-		.andExpect(status().isForbidden());
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.name").exists())
+				.andExpect(jsonPath("$.email").exists())
+				.andExpect(jsonPath("$.token").exists())
+				.andExpect(jsonPath("$.tokenType").exists())
+				.andDo(result -> {
+					
+					AuthResponseDto dto = mapper.readValue(result.getResponse().getContentAsByteArray(), AuthResponseDto.class);
+					String token = dto.getToken();
+					
+					mockMvc.perform(get("https://localhost" + UserController.PATH)
+							.contentType(MediaType.APPLICATION_JSON_VALUE)
+							.header(HttpHeaders.AUTHORIZATION, "bearer " + token)
+							.contentType(MediaType.APPLICATION_JSON_VALUE))
+							.andExpect(status().isOk())
+							.andExpect(jsonPath("$.id").exists())
+							.andExpect(jsonPath("$.name").exists())
+							.andExpect(jsonPath("$.email").exists());
+				
+				});
 	}
 
 }

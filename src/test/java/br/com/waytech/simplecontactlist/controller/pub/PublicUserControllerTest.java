@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,10 +30,10 @@ class PublicUserControllerTest {
 	@Autowired
 	private ObjectMapper mapper;
 
-	final static String USER_NAME = "John Galt";
+	final static String USER_NAME = "Joh"; //name min lenght = 3
 	final static String USER_EMAIL = "galt.john@emai.com";
 	final static String USER_PASS = "whoisjohngalt?";
-		
+	
 	@Test
 	void shouldCreateUser() throws JsonProcessingException, Exception {
 
@@ -78,7 +79,7 @@ class PublicUserControllerTest {
 				.andExpect(status().isBadRequest());
 	}
 
-	@Test
+	@Order(3)
 	void shouldReturnBadRequestOnNullPass()  throws JsonProcessingException, Exception {
 		
 		UserFormDto form = new UserFormDto();
@@ -90,6 +91,20 @@ class PublicUserControllerTest {
 				.content(mapper.writeValueAsString(form))
 				.contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	void shouldReturnBadRequestOnNameShorterThenThree()  throws JsonProcessingException, Exception {
+		
+		UserFormDto form = new UserFormDto();
+		form.setName("xx");
+		form.setEmail(USER_EMAIL);
+		form.setPassword(USER_PASS);
+		
+		mockMvc.perform(post("https://localhost" + PublicUserController.PATH)
+				.content(mapper.writeValueAsString(form))
+				.contentType(MediaType.APPLICATION_JSON_VALUE))
+		.andExpect(status().isBadRequest());
 	}
 
 }

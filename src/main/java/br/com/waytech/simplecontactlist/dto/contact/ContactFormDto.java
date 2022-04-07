@@ -3,11 +3,18 @@ package br.com.waytech.simplecontactlist.dto.contact;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import br.com.waytech.simplecontactlist.model.Contact;
 
 public class ContactFormDto {
 
+	@NotEmpty
+	@Size(min=3)
 	private String name;
+	@Email
 	private String email;
 	private String address;
 	private Set<String> phones = new HashSet<String>();

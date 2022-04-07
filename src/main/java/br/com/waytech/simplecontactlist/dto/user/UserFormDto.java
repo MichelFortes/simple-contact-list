@@ -1,16 +1,21 @@
 package br.com.waytech.simplecontactlist.dto.user;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import br.com.waytech.simplecontactlist.model.User;
 
 public class UserFormDto {
 
 	@NotEmpty
+	@Size(min = 3)
 	private String name;
 	@NotEmpty
+	@Email
 	private String email;
 	@NotEmpty
+	@Size(min = 6)
 	private String password;
 
 	public String getName() {
