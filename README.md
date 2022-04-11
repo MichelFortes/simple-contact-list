@@ -1,4 +1,8 @@
-# simple-contact-list
+# Hello Stranger!
+
+> Simple Contact List Java Rest API
+
+
 This is my first public project and it was created with the purpose of demonstrating some Spring Framework's features, like REST, Security, JPA and Testing.
 
 Before run this application, make sure:
