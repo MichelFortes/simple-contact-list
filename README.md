@@ -12,4 +12,3 @@ Before run this application, make sure:
       java -Dspring.profiles.active=prod -jar simple-contact-list.jar
 
 You can find the Flutter client at https://github.com/MichelFortes/simple_contact_list_app
-
