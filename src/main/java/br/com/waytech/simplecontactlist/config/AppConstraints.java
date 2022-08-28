@@ -53,7 +53,7 @@ public class AppConstraints {
 	public static final String HEADER_ROLE = "role";
 	public static final String HEADER_ORGANIZATION_ID = "organization_id";
 	
-	// Expirations
+	// TTLs
 	
 	public static int ORGANIZATION_INVITE_TTL_IN_DAYS = 30;
 	public static int DEFAULT_TIME_FOT_ORDER_TO_EXPIRE_IN_MINUTES = 15;
